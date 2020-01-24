@@ -56,6 +56,9 @@ class MainActivity : AppCompatActivity() {
         val yellowButton = findViewById<TextView>(R.id.yellow_button)
 
 
+
+
+
         val rootConstraintLayout = findViewById<View>(R.id.constraint_layout)
 
 
@@ -91,7 +94,7 @@ class MainActivity : AppCompatActivity() {
 //            R.id.box_four_text -> view.setBackgroundColor(Color.MAGENTA)
 //            R.id.box_five_text -> view.setBackgroundColor(Color.BLUE)
 //
-//            // Boxes using custom colors for background
+            // Boxes using custom colors for background
 //            R.id.red_button -> box_three_text.setBackgroundResource(R.color.my_red)
 //            R.id.yellow_button -> box_four_text.setBackgroundResource(R.color.my_yellow)
 //            R.id.green_button -> box_five_text.setBackgroundResource(R.color.my_green)

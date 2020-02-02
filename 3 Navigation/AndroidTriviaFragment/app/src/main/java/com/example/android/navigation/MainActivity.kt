@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
         // find the navigation controller object
         val navController = this.findNavController(R.id.myNavHostFragment)
-
+        
 
 
         //ATTACH BUTTON DRAWER TO LAYOUT

@@ -82,7 +82,7 @@ class GameFragment : Fragment() {
         { view: View ->
             val checkedId = binding.questionRadioGroup.checkedRadioButtonId
             // Do nothing if nothing is checked (id == -1)
-            if (-1 != checkedId) {
+            if (checkedId != -1 ) {
                 var answerIndex = 0
                 when (checkedId) {
                     R.id.secondAnswerRadioButton -> answerIndex = 1
@@ -101,15 +101,18 @@ class GameFragment : Fragment() {
                     } else {
                         // We've won!  Navigate to the gameWonFragment.
                         view.findNavController()
-                                .navigate(R.id.action_gameFragment_to_gameWonFragment)
+                                .navigate(GameFragmentDirections.actionGameFragmentToGameWonFragment(numQuestions, questionIndex))
                     }
                 } else {
                     // Game over! A wrong answer sends us to the gameOverFragment.
                     view.findNavController().
-                            navigate(R.id.action_gameFragment_to_gameOverFragment)
+                            navigate(GameFragmentDirections.actionGameFragmentToGameOverFragment())
                 }
             }
         }
+
+
+
         return binding.root
     }
 

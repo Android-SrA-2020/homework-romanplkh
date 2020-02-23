@@ -8,7 +8,7 @@ class ScoreViewModelFactory(private val finalScore: Int) : ViewModelProvider.Fac
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
 
         if(modelClass.isAssignableFrom(ScoreViewModel::class.java)){
-            return  ScoreViewModel(finalScore) as T
+            return ScoreViewModel(finalScore) as T
         }
 
         throw IllegalArgumentException("Unknonw ViewModel Class")

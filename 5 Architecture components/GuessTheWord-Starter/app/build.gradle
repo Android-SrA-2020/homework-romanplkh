@@ -43,6 +43,8 @@ android {
 }
 
 dependencies {
+
+    def lifecycle_version = "2.2.0"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.0.2'
@@ -51,7 +53,17 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 
     //ViewModel
+
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+    // ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+// LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+// Saved state module for ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
+// Annotation processor
+    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+
 
     // KTX
     implementation 'androidx.core:core-ktx:1.0.1'

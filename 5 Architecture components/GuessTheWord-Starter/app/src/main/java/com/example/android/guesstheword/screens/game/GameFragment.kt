@@ -58,26 +58,39 @@ class GameFragment : Fragment() {
         )
 
 
+        //Pass value of viewModel to binding data to xml view
+        binding.gameViewModelVar = viewModel;
+
+
+        // Specify the fragment view as the lifecycle owner of the binding.
+        // This is used so that the binding can observe LiveData updates
+        binding.lifecycleOwner = viewLifecycleOwner
+
+
+
+
         //ATTACH OBSERVERS TO OBSERVABLE
-        viewModel.score.observe(viewLifecycleOwner, Observer { newScore ->
-            binding.scoreText.text = newScore.toString();
+//        viewModel.score.observe(viewLifecycleOwner, Observer { newScore ->
+//            binding.scoreText.text = newScore.toString();
+//
+//        })
 
+
+//        viewModel.word.observe(viewLifecycleOwner, Observer { word ->
+//            binding.wordText.text = word;
+//        })
+
+
+        //Observer that will move to the score if no more questions left
+        viewModel.eventGameFinished.observe(viewLifecycleOwner, Observer<Boolean> { gameIsNotPlaying ->
+            if (gameIsNotPlaying) gameFinished();
         })
 
 
-        viewModel.word.observe(viewLifecycleOwner, Observer { word ->
-            binding.wordText.text = word;
-        })
-
-
-        viewModel.eventGameFinished.observe(viewLifecycleOwner, Observer<Boolean>{ gameIsNotPlaying ->
-            if(gameIsNotPlaying) gameFinished();
-        })
-
-
-        binding.correctButton.setOnClickListener { onCorrect() }
-        binding.skipButton.setOnClickListener { onSkip() }
-        binding.endGameButton.setOnClickListener { onEndGame() }
+        //AFTER ATTACHING BINDING LISTENERS WE NO LONGER NEED THIS BINDINGS
+//        binding.correctButton.setOnClickListener { onCorrect() }
+//        binding.skipButton.setOnClickListener { onSkip() }
+//        binding.endGameButton.setOnClickListener { onEndGame() }
 
         return binding.root
     }
@@ -85,13 +98,18 @@ class GameFragment : Fragment() {
 
     /** Methods for buttons presses **/
 
-    private fun onSkip() {
-        viewModel.onSkip()
-    }
+//    private fun onSkip() {
+//        viewModel.onSkip()
+//    }
 
-    private fun onCorrect() {
-        viewModel.onCorrect()
-    }
+//    private fun onCorrect() {
+//        viewModel.onCorrect()
+//    }
+//
+//    private fun onEndGame() {
+//
+//        gameFinished();
+//    }
 
     /**
      * Moves to the next word in the list
@@ -113,8 +131,5 @@ class GameFragment : Fragment() {
 
     }
 
-    private fun onEndGame() {
 
-        gameFinished();
-    }
 }

@@ -58,15 +58,21 @@ class ScoreFragment : Fragment() {
                 .get(ScoreViewModel::class.java)
 
 
+        binding.scoreViewModelVar = viewModel;
 
+
+        // Specify the fragment view as the lifecycle owner of the binding.
+// This is used so that the binding can observe LiveData updates
+        binding.lifecycleOwner = viewLifecycleOwner;
 
         //Add clicker for button play again
-        binding.playAgainButton.setOnClickListener { viewModel.onPlayAgain() }
+        //Remove binding after attaching binding listeners
+        //binding.playAgainButton.setOnClickListener { viewModel.onPlayAgain() }
 
 
-        viewModel.score.observe(viewLifecycleOwner, Observer { newScore ->
-            binding.scoreText.text = newScore.toString()
-        })
+//        viewModel.score.observe(viewLifecycleOwner, Observer { newScore ->
+//            binding.scoreText.text = newScore.toString()
+//        })
 
 
         viewModel.eventPlayAgain.observe(viewLifecycleOwner, Observer { playAgain ->

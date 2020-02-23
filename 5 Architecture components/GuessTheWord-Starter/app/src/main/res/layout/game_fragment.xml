@@ -18,6 +18,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+
+    <data>
+        <variable name="gameViewModelVar" type="com.example.android.guesstheword.screens.game.GameViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/game_layout"
         android:layout_width="match_parent"
@@ -41,8 +46,11 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed" />
 
+
+<!--        ATTACH LIVE DATA-->
         <TextView
             android:id="@+id/word_text"
+            android:text="@{@string/quote_format(gameViewModelVar.word)}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true"
@@ -77,6 +85,7 @@
 
         <TextView
             android:id="@+id/score_text"
+            android:text="@{@string/score_format(gameViewModelVar.score)}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -90,8 +99,10 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:text="Score: 2" />
 
+<!--        ADD LISTENER BINDINGS TO BUTTONS-->
         <Button
             android:id="@+id/skip_button"
+            android:onClick="@{() -> gameViewModelVar.onSkip()}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -111,6 +122,7 @@
 
         <Button
             android:id="@+id/correct_button"
+            android:onClick="@{()-> gameViewModelVar.onCorrect()}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -124,6 +136,7 @@
 
         <Button
             android:id="@+id/end_game_button"
+            android:onClick="@{()-> gameViewModelVar.onGameFinished()}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"

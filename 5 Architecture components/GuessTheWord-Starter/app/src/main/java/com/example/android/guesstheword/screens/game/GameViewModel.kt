@@ -61,12 +61,13 @@ class GameViewModel : ViewModel() {
 
 
     init {
-        resetList()
-        nextWord()
 
         //Initialize default values for mutable live data
         _word.value = "";
         _score.value = 0;
+
+        resetList()
+        nextWord()
 
 
     }

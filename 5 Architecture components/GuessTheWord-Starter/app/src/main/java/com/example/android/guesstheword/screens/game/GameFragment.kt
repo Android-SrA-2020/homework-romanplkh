@@ -39,13 +39,14 @@ class GameFragment : Fragment() {
 
     //REF to game fragment so we can access methods in props in it
     private lateinit var viewModel: GameViewModel;
-
     private lateinit var binding: GameFragmentBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
 
+        //YOU CAN USE EXTENSION METHOD INSTEAD OF VIEW MODEL PROVIDER
+        //val viewModel by viewModels<GameViewModel>()  - needs add gradle dependency
         //INIT VIEW MODEL
         viewModel = ViewModelProvider(this).get(GameViewModel::class.java)
 

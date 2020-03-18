@@ -18,6 +18,7 @@ package com.example.android.trackmysleepquality.sleeptracker
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.example.android.trackmysleepquality.database.SleepDatabaseDao
@@ -59,6 +60,43 @@ class SleepTrackerViewModel(
     private var tonight = MutableLiveData<SleepNight?>()
 
 
+    //ENABLE DISABLE BUTTONS HANDLERS
+
+    //The Start button should be enabled when tonight is null.
+    val startButtonVisible = Transformations.map(tonight) {
+        it == null
+    }
+
+    //The Stop button should be enabled when tonight is not null.
+    val stopButtonVisible = Transformations.map(tonight) {
+        it != null
+    }
+
+    //The Clear button should only be enabled if nights, and thus the database, contains sleep nights.
+    val clearButtonVisible = Transformations.map(nights) {
+        it?.isNotEmpty()
+    }
+
+
+    //OBSERVABLE FOR NAVIGATION TO SleepQuality Fragment
+    private val _navigateToSleepQuality = MutableLiveData<SleepNight>()
+
+    val navigateToSleepQuality: LiveData<SleepNight>
+        get() = _navigateToSleepQuality
+
+
+    //SNACKBAR OBSERVABLE
+    private var _showSnackbarEvent = MutableLiveData<Boolean>()
+    val showSnackBarEvent: LiveData<Boolean>
+        get() = _showSnackbarEvent
+
+
+    //WHEN DONE (HIDE) SNACKBAR
+    fun doneShowingSnackbar() {
+        _showSnackbarEvent.value = false
+    }
+
+
     //Initialize enttity reference live data
     init {
         initializeTonight()
@@ -93,8 +131,6 @@ class SleepTrackerViewModel(
     }
 
 
-
-
     //RECORD SLEEP TIME
     fun onStartTracking() {
         //launch a coroutine in the uiScope, because you need this result to continue and update the UI
@@ -123,11 +159,11 @@ class SleepTrackerViewModel(
     }
 
 
-
     //STOP RECORDING
-    fun onStopSTracking(){
+    fun onStopSTracking() {
         uiScope.launch {
-            val oldNight = tonight.value ?: return@launch; //syntax specifies the function from which this statement returns,
+            val oldNight = tonight.value
+                    ?: return@launch; //syntax specifies the function from which this statement returns,
             // among several nested functions. syntax is return@label. In our case label is @launch
 
 
@@ -136,6 +172,10 @@ class SleepTrackerViewModel(
 
             //Update Database
             update(oldNight);
+
+
+            //Navigate to Sleep Quality Fragment with value 
+            _navigateToSleepQuality.value = oldNight;
         }
     }
 
@@ -150,13 +190,12 @@ class SleepTrackerViewModel(
     }
 
 
-
-
     //CLEAR SCREEN AND ALL IN DB
     fun onClear() {
         uiScope.launch {
             clear()
             tonight.value = null
+            _showSnackbarEvent.value = true
         }
     }
 
@@ -166,6 +205,12 @@ class SleepTrackerViewModel(
         withContext(Dispatchers.IO) {
             database.clear()
         }
+    }
+
+
+    //WHEN WE WILL BE ON SleepQualityFragment we call this method
+    fun doneNavigating() {
+        _navigateToSleepQuality.value = null
     }
 
 

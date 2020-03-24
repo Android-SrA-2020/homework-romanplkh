@@ -25,31 +25,34 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.trackmysleepquality.database.SleepNight
 import java.text.SimpleDateFormat
+import java.util.*
+import java.util.concurrent.TimeUnit
+
 //import java.util.concurrent.TimeUnit
 //import java.util.*
 
 
-//private val ONE_MINUTE_MILLIS = TimeUnit.MILLISECONDS.convert(1, TimeUnit.MINUTES)
-//private val ONE_HOUR_MILLIS = TimeUnit.MILLISECONDS.convert(1, TimeUnit.HOURS)
+private val ONE_MINUTE_MILLIS = TimeUnit.MILLISECONDS.convert(1, TimeUnit.MINUTES)
+private val ONE_HOUR_MILLIS = TimeUnit.MILLISECONDS.convert(1, TimeUnit.HOURS)
 
-//fun convertDurationToFormatted(startTimeMilli: Long, endTimeMilli: Long, res: Resources): String {
-//    val durationMilli = endTimeMilli - startTimeMilli
-//    val weekdayString = SimpleDateFormat("EEEE", Locale.getDefault()).format(startTimeMilli)
-//    return when {
-//        durationMilli < ONE_MINUTE_MILLIS -> {
-//            val seconds = TimeUnit.SECONDS.convert(durationMilli, TimeUnit.MILLISECONDS)
-//            res.getString(R.string.seconds_length, seconds, weekdayString)
-//        }
-//        durationMilli < ONE_HOUR_MILLIS -> {
-//            val minutes = TimeUnit.MINUTES.convert(durationMilli, TimeUnit.MILLISECONDS)
-//            res.getString(R.string.minutes_length, minutes, weekdayString)
-//        }
-//        else -> {
-//            val hours = TimeUnit.HOURS.convert(durationMilli, TimeUnit.MILLISECONDS)
-//            res.getString(R.string.hours_length, hours, weekdayString)
-//        }
-//    }
-//}
+fun convertDurationToFormatted(startTimeMilli: Long, endTimeMilli: Long, res: Resources): String {
+    val durationMilli = endTimeMilli - startTimeMilli
+    val weekdayString = SimpleDateFormat("EEEE", Locale.getDefault()).format(startTimeMilli)
+    return when {
+        durationMilli < ONE_MINUTE_MILLIS -> {
+            val seconds = TimeUnit.SECONDS.convert(durationMilli, TimeUnit.MILLISECONDS)
+            res.getString(R.string.seconds_length, seconds, weekdayString)
+        }
+        durationMilli < ONE_HOUR_MILLIS -> {
+            val minutes = TimeUnit.MINUTES.convert(durationMilli, TimeUnit.MILLISECONDS)
+            res.getString(R.string.minutes_length, minutes, weekdayString)
+        }
+        else -> {
+            val hours = TimeUnit.HOURS.convert(durationMilli, TimeUnit.MILLISECONDS)
+            res.getString(R.string.hours_length, hours, weekdayString)
+        }
+    }
+}
 
 
 
@@ -139,7 +142,12 @@ fun formatNights(nights: List<SleepNight>, resources: Resources): Spanned {
 
 
 
+
+//The simple ViewHolder that you added to Util.kt just wraps a TextView in a TextItemViewHolder.
 //The code goes in Util.kt because this view holder is temporary, and you replace it later
+//A ViewHolder describes an item view and metadata about its place within the RecyclerView.
+// RecyclerView relies on this functionality to correctly position the view as the list scrolls,
+// and to do interesting things like animate views when items are added or removed in the Adapter
 class TextItemViewHolder(val textView: TextView): RecyclerView.ViewHolder(textView)
 
 
